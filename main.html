@@ -280,8 +280,10 @@ a{color:inherit}
 
 /* ---- v5: route as horizontal journey on wide screens ---- */
 @media(min-width:900px){
- .route{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));column-gap:36px;padding:26px 32px 14px}
- .route h3{grid-column:1/-1;font-size:22px}
+ .route{display:flex;flex-wrap:wrap;justify-content:space-between;column-gap:44px;padding:26px 32px 14px}
+ .route h3{flex:0 0 100%;font-size:22px}
+ .route .stop{flex:0 1 auto;max-width:100%}
+ .route .stop li{width:max-content;max-width:100%}
  .route .stop::before{display:none}
  .route .stop{padding-bottom:16px}
 }
