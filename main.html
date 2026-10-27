@@ -280,11 +280,13 @@ a{color:inherit}
 
 /* ---- v5: route as horizontal journey on wide screens ---- */
 @media(min-width:900px){
- .route{display:flex;flex-wrap:wrap;justify-content:space-between;column-gap:44px;padding:26px 32px 14px}
- .route h3{flex:0 0 100%;font-size:22px}
- .route .stop{flex:0 1 auto;max-width:100%}
- .route .stop li{width:max-content;max-width:100%}
- .route .stop::before{display:none}
+ .route{display:flex;flex-wrap:nowrap;column-gap:44px;padding:26px 32px 14px;align-items:flex-start}
+ .route h3{flex:0 0 100%;font-size:22px;margin-bottom:18px}
+ .route{flex-wrap:wrap}
+ .route .stop{flex:var(--w,40) 1 0;min-width:200px}
+ .route .stop.now{--w:40}
+ .route .stop::before{display:block;top:12px;bottom:auto;height:3px;width:calc(100% + 44px - 23px);inset-inline-start:21px;background:rgba(255,255,255,.28)}
+ .route .stop:last-child::before{display:none}
  .route .stop{padding-bottom:16px}
 }
 .rw>.blk.need:only-child{flex:0 1 560px}
@@ -382,6 +384,8 @@ var OUT={
   film:"תעודת בגרות עם סרט גמר שהפקתם",
   theatre:"תעודת בגרות עם הפקת גמר על הבמה"
 };
+/* timeline: indexes into t.next (a=army, s=study, w=work); t.later always goes to work */
+var RT={cs:{a:[2],s:[0,1]},biotech:{a:[0],s:[1]},industry:{s:[0,1,2]},physics:{a:[0],s:[1,2]},chem:{s:[0,1,2,3]},bio:{s:[0,1,2,3]},social:{s:[0]},geo:{a:[1],s:[0]},arabic:{a:[0,1],s:[2]},french:{a:[1],s:[0]},dance:{s:[0,2],w:[1]},art:{s:[0]},film:{s:[0,1]},theatre:{s:[0]}};
 var NO_REQ="האתר לא מציין תנאי קבלה מיוחדים. כדאי לברר אצל רכז/ת השכבה או היועצת.";
 
 var TRACKS=[
@@ -526,10 +530,14 @@ function renderSheet(id,keepScroll){
   if(!t){return}
   var c=CATS[t.cat].color;
   var route='<div class="route wide"><h3>לאן זה מוביל</h3>';
-  route+='<div class="stop now"><b>בסיום התיכון</b><ul><li>'+esc(OUT[t.id])+'</li></ul></div>';
-  if(t.next.length)route+='<div class="stop"><b>אחרי התיכון</b>'+list(t.next)+'</div>';
-  if(t.later.length)route+='<div class="stop"><b>בעולם העבודה</b>'+list(t.later)+'</div>';
-  if(!t.next.length&&!t.later.length)route+='<div class="stop"><b>אחרי התיכון</b><ul><li>האתר לא מפרט נתיבי המשך. כדאי לשאול את רכז/ת המגמה.</li></ul></div>';
+  route+='<div class="stop now" style="--w:'+Math.max(20,OUT[t.id].length)+'"><b>בסיום התיכון</b><ul><li>'+esc(OUT[t.id])+'</li></ul></div>';
+  var rt=RT[t.id]||{},pick=function(ix){return (ix||[]).map(function(k){return t.next[k].replace(/^(שירות צבאי|המשך אקדמי): /,'')})};
+  var army=pick(rt.a),study=pick(rt.s),work=pick(rt.w).concat(t.later);
+  var sw=function(a){return Math.max.apply(null,a.map(function(x){return x.length}).concat([20])).toString().replace(/^(\d+)$/,function(m){return Math.round(40+m*.5)})};
+  if(army.length)route+='<div class="stop" style="--w:'+sw(army)+'"><b>בצבא</b>'+list(army)+'</div>';
+  if(study.length)route+='<div class="stop" style="--w:'+sw(study)+'"><b>באקדמיה</b>'+list(study)+'</div>';
+  if(work.length)route+='<div class="stop" style="--w:'+sw(work)+'"><b>בעולם העבודה</b>'+list(work)+'</div>';
+  if(!army.length&&!study.length&&!work.length)route+='<div class="stop"><b>אחרי התיכון</b><ul><li>האתר לא מפרט נתיבי המשך. כדאי לשאול את רכז/ת המגמה.</li></ul></div>';
   route+='</div>';
   var top=keepScroll?sh.scrollTop:0;
   sh.style.setProperty("--c",c);
