@@ -266,6 +266,9 @@ a{color:inherit}
 .sh-txt .starp.big svg{width:24px;height:24px}
 .pill.mini{background:rgba(22,22,43,.55);color:#fff}
 .pill.mini[aria-pressed="true"] svg{fill:#FFB400;stroke:#FFB400}
+
+.blk h4.sub{display:flex;align-items:center;gap:10px;font-size:18px;margin:20px 0 8px;padding-top:16px;border-top:1px dashed var(--line)}
+.bi.sm{width:30px;height:30px;border-radius:10px}.bi.sm svg{width:17px;height:17px}
 </style>
 </head>
 <body>
@@ -520,8 +523,7 @@ function renderSheet(id,keepScroll){
    '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
    (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
-   '<div class="cols">'+'<section class="blk'+(t.how&&t.how.length?'':' solo')+'">'+bh("book","מה לומדים")+list(t.learn)+'</section>'+
-   (t.how&&t.how.length?'<section class="blk">'+bh("spark","איך לומדים")+list(t.how)+'</section>':'')+
+   '<div class="cols">'+'<section class="blk">'+bh("book","מה לומדים")+list(t.learn)+(t.how&&t.how.length?'<h4 class="sub"><span class="bi sm"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO.spark+'</svg></span>איך לומדים</h4>'+list(t.how):'')+'</section>'+
    (t.off&&t.off.length?'<section class="blk off">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
    '<section class="blk">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
    '<section class="blk gives">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+'</div>'+
