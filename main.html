@@ -187,6 +187,44 @@ a{color:inherit}
   background:var(--ink);color:#fff;font-weight:700;
 }
 
+
+/* ---- detail page: rich layout ---- */
+.sheet{background:
+  radial-gradient(700px 420px at 92% 560px,color-mix(in srgb,var(--c) 16%,transparent),transparent 70%),
+  radial-gradient(620px 420px at 6% 1100px,rgba(255,180,0,.13),transparent 70%),
+  radial-gradient(520px 380px at 94% 1700px,color-mix(in srgb,var(--c) 12%,transparent),transparent 70%),
+  var(--paper);background-attachment:local,local,local,scroll}
+.sh-head{position:relative;overflow:hidden;padding:calc(12px + env(safe-area-inset-top)) 0 0;background:var(--c)}
+.sh-bg{position:absolute;inset:-30px;background:var(--img) center/cover;filter:blur(26px) saturate(1.25);opacity:.55;transform:scale(1.1)}
+.sh-head::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(115deg,color-mix(in srgb,var(--c) 94%,#000) 8%,color-mix(in srgb,var(--c) 62%,transparent) 100%)}
+.sh-head::after{content:"";position:absolute;z-index:1;width:520px;height:520px;border-radius:50%;inset-inline-end:-140px;bottom:-300px;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 68%)}
+.sh-in{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 16px 30px}
+.sh-hero{display:flex;flex-direction:column;gap:18px}
+.sh-pic{border-radius:22px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.35);aspect-ratio:16/9;border:3px solid rgba(255,255,255,.35);background:#000}
+.sh-pic img{display:block;width:100%;height:100%;object-fit:cover}
+.sh-head h2{font-size:clamp(36px,10vw,64px);margin:0 0 8px;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.sh-head p{max-width:46ch;font-size:clamp(17px,2.2vw,22px)}
+.facts span{backdrop-filter:blur(6px);background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.3)}
+.sh-body{max-width:1100px;padding:22px 16px 56px;display:grid;grid-template-columns:1fr;gap:16px}
+.blk{margin:0;border:0;border-radius:24px;padding:22px 24px;box-shadow:0 8px 30px rgba(22,22,43,.07);position:relative;overflow:hidden}
+.blk::before{content:"";position:absolute;inset-inline:0;top:0;height:5px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 40%,#FFB400))}
+.blk h3{display:flex;align-items:center;gap:12px;font-size:20px;margin:4px 0 12px}
+.bi{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:color-mix(in srgb,var(--c) 13%,#fff);flex:none}
+.bi svg{width:21px;height:21px;fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.blk p,.blk li{font-size:17px;line-height:1.7}
+.blk.lead p{font-size:19px;line-height:1.85}
+.blk li::marker{color:var(--c)}
+.blk .src{margin-top:10px;font-size:14px}
+.route{margin:0;border-radius:24px;padding:24px 26px 12px;background:linear-gradient(135deg,var(--ink),color-mix(in srgb,var(--c) 38%,var(--ink)));box-shadow:0 10px 34px rgba(22,22,43,.25)}
+.cta{margin:6px auto 0;max-width:420px;width:100%;box-sizing:border-box;background:var(--c);border-radius:16px;padding:15px 18px;box-shadow:0 8px 22px color-mix(in srgb,var(--c) 40%,transparent)}
+@media(min-width:900px){
+ .sh-in{padding:0 32px 44px}
+ .sh-hero{flex-direction:row-reverse;align-items:center;justify-content:space-between;gap:56px}
+ .sh-pic{flex:0 0 46%;transform:rotate(-1.5deg)}
+ .sh-txt{flex:1}
+ .sh-body{grid-template-columns:1fr 1fr;gap:20px;padding:30px 32px 70px}
+ .blk.wide,.route.wide,.cta{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -417,11 +455,13 @@ function find(id){return TRACKS.filter(function(t){return t.id===id})[0]}
 
 function list(items){return '<ul>'+items.map(function(i){return '<li>'+esc(i)+'</li>'}).join("")+'</ul>'}
 
+var ICO={info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/>',book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5v16"/><path d="M9 8h7"/>',spark:'<path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z"/><path d="M19 16v4M17 18h4"/>',check:'<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4.5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/>',star:'<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/>'};
+function bh(k,t){return '<h3><span class="bi"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO[k]+'</svg></span>'+esc(t)+'</h3>'}
 function renderSheet(id,keepScroll){
   var t=find(id),sh=$("#sheet");
   if(!t){return}
   var c=CATS[t.cat].color;
-  var route='<div class="route"><h3>לאן זה מוביל</h3>';
+  var route='<div class="route wide"><h3>לאן זה מוביל</h3>';
   route+='<div class="stop now"><b>בסיום התיכון</b><ul><li>'+esc(OUT[t.id])+'</li></ul></div>';
   if(t.next.length)route+='<div class="stop"><b>אחרי התיכון</b>'+list(t.next)+'</div>';
   if(t.later.length)route+='<div class="stop"><b>בעולם העבודה</b>'+list(t.later)+'</div>';
@@ -430,18 +470,19 @@ function renderSheet(id,keepScroll){
   var top=keepScroll?sh.scrollTop:0;
   sh.style.setProperty("--c",c);
   sh.innerHTML=
-   '<div class="sh-head"><div class="sh-bar">'+
+   '<div class="sh-head" style="--img:url(img/'+t.id+'.webp)"><div class="sh-bg"></div><div class="sh-in"><div class="sh-bar">'+
    '<button class="ico" id="shBack" aria-label="חזרה לרשימה"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>'+
    '<div class="right"><button class="ico" id="shShare" aria-label="שיתוף"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>'+
    '<button class="ico" id="shFav" aria-pressed="'+isFav(t.id)+'" aria-label="שמירה ברשימה שלי">'+STAR+'</button></div></div>'+
-   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'</div>'+
+   '<div class="sh-hero"><div class="sh-pic"><img src="img/'+t.id+'.webp" alt="" width="640" height="360"></div><div class="sh-txt">'+
+   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div></div></div>'+
    '<div class="sh-body">'+
-   (t.about?'<section class="blk"><h3>על המגמה</h3><p>'+esc(t.about)+'</p></section>':'')+
-   '<section class="blk"><h3>מה לומדים</h3>'+list(t.learn)+'</section>'+
-   (t.how&&t.how.length?'<section class="blk"><h3>איך לומדים</h3>'+list(t.how)+'</section>':'')+
-   (t.off&&t.off.length?'<section class="blk"><h3>הבגרות: במה נבחנים ומה לומדים</h3><ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
-   '<section class="blk"><h3>מה נדרש</h3>'+'<p>'+esc(NO_REQ)+'</p>'+'</section>'+
-   '<section class="blk"><h3>מה מקבלים</h3><p>'+esc(t.gives)+'</p></section>'+
+   (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
+   '<section class="blk'+(t.how&&t.how.length?'':' wide')+'">'+bh("book","מה לומדים")+list(t.learn)+'</section>'+
+   (t.how&&t.how.length?'<section class="blk">'+bh("spark","איך לומדים")+list(t.how)+'</section>':'')+
+   (t.off&&t.off.length?'<section class="blk wide">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
+   '<section class="blk">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
+   '<section class="blk">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
    '</div>';
