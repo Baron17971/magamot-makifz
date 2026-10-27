@@ -94,8 +94,8 @@ a{color:inherit}
 }
 .tile::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:6px;background:var(--c)}
 .tile:active{transform:scale(.98)}
-.tile .ill{margin:-16px -16px 8px -20px;height:96px;background:color-mix(in srgb,var(--c) 10%,#fff);overflow:hidden}
-.tile .ill svg{display:block;width:100%;height:100%}
+.tile .ill{margin:-16px -16px 8px -20px;aspect-ratio:16/9;height:auto;background:color-mix(in srgb,var(--c) 10%,#fff);overflow:hidden}
+.tile .ill img{display:block;width:100%;height:100%;object-fit:cover}
 .tile .open{all:unset;cursor:pointer;display:block}
 .tile .open::after{content:"";position:absolute;inset:0}
 .tile .open:focus-visible{outline:none}
@@ -348,7 +348,7 @@ function matches(t){
 
 function tile(t){
   var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
-  b.innerHTML=(ILL[t.id]?'<div class="ill">'+ILL[t.id]+'</div>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
   s.addEventListener("click",function(){toggleFav(t.id)});
@@ -439,7 +439,7 @@ function renderSheet(id,keepScroll){
    (t.about?'<section class="blk"><h3>על המגמה</h3><p>'+esc(t.about)+'</p></section>':'')+
    '<section class="blk"><h3>מה לומדים</h3>'+list(t.learn)+'</section>'+
    (t.how&&t.how.length?'<section class="blk"><h3>איך לומדים</h3>'+list(t.how)+'</section>':'')+
-   '<section class="blk"><h3>מה נדרש</h3>'+(t.req?'<p>'+esc(t.req)+'</p>':'<p class="muted">'+esc(NO_REQ)+'</p>')+'</section>'+
+   '<section class="blk"><h3>מה נדרש</h3>'+'<p>'+esc(NO_REQ)+'</p>'+'</section>'+
    '<section class="blk"><h3>מה מקבלים</h3><p>'+esc(t.gives)+'</p></section>'+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
