@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>איזו מגמה? מקיף ז׳ אשדוד</title>
+<meta name="description" content="מדריך קצר לתלמידי כיתות ט׳ ולהוריהם: כל המגמות של כיתה י׳ במקיף ז׳ אשדוד, מה לומדים, מה מקבלים ולאן זה מוביל.">
+<meta name="theme-color" content="#16162B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="איזו מגמה?">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16162B;
+  --ink-2:#4B4D68;
+  --paper:#EEF1F7;
+  --card:#FFFFFF;
+  --line:#DADFEC;
+  --sci:#1F4FE0;
+  --soc:#B35F00;
+  --lang:#6D35D6;
+  --art:#D0276E;
+  --radius:18px;
+  --font:"Rubik","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:70px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);
+  font-size:16px;line-height:1.55;
+  padding-bottom:calc(76px + env(safe-area-inset-bottom));
+}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid #FFB400;outline-offset:2px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* top bar */
+.top{
+  position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.brand{font-weight:700;font-size:15px;letter-spacing:.2px}
+.brand small{display:block;font-weight:400;font-size:12px;opacity:.75}
+.install{
+  background:#FFB400;color:#16162B;border:0;border-radius:999px;
+  padding:8px 14px;font-weight:700;font-size:13px;display:none;
+}
+.install.show{display:inline-block}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;padding:6px 16px 26px;border-radius:0 0 28px 28px}
+.hero h1{margin:8px 0 8px;font-size:clamp(30px,8.5vw,44px);line-height:1.12;font-weight:700}
+.hero p{margin:0;max-width:34ch;color:#C9CCE6;font-size:16px}
+.search{
+  margin-top:18px;display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);
+  border-radius:14px;padding:0 14px;
+}
+.search svg{flex:none;opacity:.55}
+.search input{
+  flex:1;border:0;background:transparent;font:inherit;padding:13px 0;min-width:0;color:var(--ink);
+}
+.search input:focus{outline:none}
+.search:focus-within{outline:3px solid #FFB400}
+
+/* chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 16px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:none;border:1.5px solid var(--line);background:#fff;border-radius:999px;
+  padding:7px 14px;font-size:14px;font-weight:500;
+}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* groups & tiles */
+.group{padding:20px 16px 0}
+.group h2{margin:0 0 12px;font-size:19px;font-weight:700;display:flex;align-items:baseline;gap:8px}
+.group h2 span{font-size:13px;font-weight:400;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr)} .wrap{max-width:980px;margin:0 auto}}
+@media(min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
+.tile{
+  position:relative;text-align:start;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:16px 16px 14px;padding-inline-start:20px;
+  display:flex;flex-direction:column;gap:6px;min-height:150px;overflow:hidden;
+}
+.tile::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:6px;background:var(--c)}
+.tile:active{transform:scale(.98)}
+.tile .open{all:unset;cursor:pointer;display:block}
+.tile .open::after{content:"";position:absolute;inset:0}
+.tile .open:focus-visible{outline:none}
+.tile:has(.open:focus-visible){outline:3px solid #FFB400;outline-offset:2px}
+.tile h3{margin:0;font-size:19px;line-height:1.2;font-weight:700;padding-inline-end:28px}
+.tile p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.star{
+  position:absolute;top:8px;inset-inline-end:8px;width:40px;height:40px;border:0;background:transparent;
+  display:grid;place-items:center;border-radius:50%;z-index:2;
+}
+.star svg{width:22px;height:22px;fill:none;stroke:var(--ink-2);stroke-width:1.8}
+.star[aria-pressed="true"] svg{fill:#FFB400;stroke:#C98A00}
+.empty{padding:40px 24px;text-align:center;color:var(--ink-2)}
+
+/* bottom nav */
+.nav{
+  position:fixed;inset-inline:0;bottom:0;z-index:25;background:#fff;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom);
+}
+.nav button{
+  border:0;background:transparent;padding:10px 4px 9px;font-size:13px;font-weight:500;color:var(--ink-2);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.nav button[aria-current="page"]{color:var(--ink);font-weight:700}
+.nav button[aria-current="page"] svg{stroke:var(--ink)}
+.nav svg{width:22px;height:22px;fill:none;stroke:var(--ink-2);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:#FFB400;color:#16162B;font-size:11px;font-weight:700;margin-inline-start:4px}
+
+/* help view */
+.panel{padding:22px 16px 8px}
+.panel h2{font-size:24px;margin:0 0 6px}
+.panel > p{margin:0 0 14px;color:var(--ink-2)}
+.terms{display:grid;gap:10px;margin:0;padding:0}
+.terms div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.terms dt{font-weight:700;margin:0}
+.terms dd{margin:2px 0 0;color:var(--ink-2);font-size:15px}
+.how{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.how h3{margin:0 0 4px;font-size:16px}
+.how p{margin:0;color:var(--ink-2);font-size:15px}
+.note{margin:18px 16px 0;font-size:13px;color:var(--ink-2)}
+.note a{text-decoration:underline}
+
+/* detail sheet */
+.sheet{
+  position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;
+  transform:translateY(100%);visibility:hidden;transition:transform .28s ease,visibility 0s .28s;
+}
+.sheet.open{transform:none;visibility:visible;transition:transform .28s ease}
+@media(prefers-reduced-motion:reduce){.sheet,.sheet.open{transition:none}}
+.sh-head{background:var(--c);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 26px}
+.sh-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.sh-bar .ico{
+  width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;display:grid;place-items:center
+}
+.sh-bar svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sh-bar .ico[aria-pressed="true"] svg{fill:#FFD35A;stroke:#FFD35A}
+.sh-bar .right{display:flex;gap:8px}
+.sh-head h2{margin:0 0 6px;font-size:clamp(34px,10vw,50px);line-height:1.05;font-weight:700}
+.sh-head p{margin:0;font-size:17px;max-width:36ch;opacity:.95}
+.sh-body{padding:8px 16px 40px;max-width:720px;margin:0 auto}
+.blk{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:12px}
+.blk h3{margin:0 0 8px;font-size:18px}
+.blk ul{margin:0;padding-inline-start:20px}
+.blk li{margin:4px 0}
+.blk p{margin:0}
+.muted{color:var(--ink-2)}
+
+/* the route: where it leads */
+.route{margin-top:12px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:18px 18px 8px}
+.route h3{margin:0 0 14px;font-size:18px}
+.stop{position:relative;padding-inline-start:34px;padding-bottom:20px}
+.stop::before{ /* the line */
+  content:"";position:absolute;inset-inline-start:9px;top:18px;bottom:-2px;width:3px;background:#3A3C63;border-radius:2px
+}
+.stop:last-child::before{display:none}
+.stop::after{ /* the dot */
+  content:"";position:absolute;inset-inline-start:0;top:3px;width:21px;height:21px;border-radius:50%;
+  background:var(--ink);border:5px solid var(--c2,#FFB400);
+}
+.stop b{display:block;font-size:15px;color:#FFB400;margin-bottom:3px}
+.stop ul{margin:0;padding-inline-start:18px;color:#E7E9F8}
+.stop li{margin:3px 0}
+.stop.now::after{background:var(--c2,#FFB400)}
+.cta{
+  display:block;text-align:center;text-decoration:none;margin-top:16px;padding:13px 16px;border-radius:14px;
+  background:var(--ink);color:#fff;font-weight:700;
+}
+
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">מקיף ז׳ אשדוד<small>בית ספר שהוא בית</small></div>
+  <button class="install" id="installBtn" type="button">הוספה למסך הבית</button>
+</header>
+
+<div class="wrap">
+<!-- view: all tracks -->
+<section id="viewAll">
+  <div class="hero">
+    <h1>איזו מגמה בכיתה י׳?</h1>
+    <p>16 מגמות, בקצרה: מה לומדים, מה מקבלים ולאן זה מוביל.</p>
+    <label class="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="sr">חיפוש מגמה</span>
+      <input id="q" type="search" placeholder="חפשו מגמה או תחום, למשל ״הייטק״" autocomplete="off">
+    </label>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום"></div>
+  <div id="groups"></div>
+</section>
+
+<!-- view: my list -->
+<section id="viewMine" hidden>
+  <div class="panel">
+    <h2>הרשימה שלי</h2>
+    <p>המגמות שסימנתם בכוכב. אפשר להראות אותן להורים או ליועצת.</p>
+  </div>
+  <div class="group" style="padding-top:0"><div class="grid" id="mineGrid"></div></div>
+  <div class="empty" id="mineEmpty" hidden>עוד לא סימנתם מגמות.<br>לחצו על הכוכב בכרטיס של מגמה כדי לשמור אותה כאן.</div>
+</section>
+
+<!-- view: help -->
+<section id="viewHelp" hidden>
+  <div class="panel">
+    <h2>מושגים להורים ולתלמידים</h2>
+    <p>כמה מילים שחוזרות בכל המגמות.</p>
+    <dl class="terms">
+      <div><dt>יח״ל (יחידות לימוד)</dt><dd>ההיקף של מקצוע בתעודת הבגרות. מקצוע ב-5 יח״ל הוא ברמה המורחבת.</dd></div>
+      <div><dt>בונוס</dt><dd>תוספת לממוצע הציונים בקבלה ללימודים אקדמיים, על מקצועות שנלמדו ברמה גבוהה.</dd></div>
+      <div><dt>תעודה טכנולוגית</dt><dd>תעודה נוספת, מעבר לתעודת הבגרות, שמקבלים בסיום מסלולים טכנולוגיים.</dd></div>
+      <div><dt>עתודה טכנולוגית</dt><dd>מסלול בצה״ל שמאפשר ללמוד תואר הנדסי במסגרת השירות.</dd></div>
+    </dl>
+  </div>
+  <div class="panel">
+    <h2>איך שומרים את האפליקציה בטלפון</h2>
+    <div class="how"><h3>באייפון (Safari)</h3><p>לוחצים על כפתור השיתוף, ואז על ״הוספה למסך הבית״.</p></div>
+    <div class="how"><h3>באנדרואיד (Chrome)</h3><p>לוחצים על שלוש הנקודות בפינה, ואז על ״התקנת האפליקציה״ או ״הוספה למסך הבית״.</p></div>
+    <div class="how"><h3>אחרי ההתקנה</h3><p>האפליקציה נפתחת במסך מלא וגם עובדת בלי חיבור לאינטרנט.</p></div>
+  </div>
+  <p class="note">המידע מבוסס על דפי המגמות באתר בית הספר, בניסוח מקוצר. לפרטים מלאים, לתנאי קבלה ולמספר המקומות בכל מגמה: <a href="https://www.makifz.com" target="_blank" rel="noopener">makifz.com</a> או פנייה לרכז/ת השכבה וליועצת.</p>
+</section>
+</div>
+
+<!-- detail sheet -->
+<article class="sheet" id="sheet" aria-hidden="true" aria-labelledby="shTitle"></article>
+
+<nav class="nav" aria-label="ניווט ראשי">
+  <button data-view="All" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>כל המגמות</button>
+  <button data-view="Mine"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><span>הרשימה שלי<span class="badge" id="badge" hidden>0</span></span></button>
+  <button data-view="Help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>מושגים והתקנה</button>
+</nav>
+
+<script>
+"use strict";
+var SITE="https://www.makifz.com/";
+var CATS={
+  sci:{name:"מדע וטכנולוגיה",color:"#1F4FE0"},
+  soc:{name:"חברה ורוח",color:"#B35F00"},
+  lang:{name:"שפות",color:"#6D35D6"},
+  art:{name:"אמנויות",color:"#D0276E"}
+};
+var OUT={
+  biotech:"תעודת בגרות איכותית + תעודה טכנולוגית",
+  industry:"תעודת בגרות איכותית + תעודה טכנולוגית",
+  cs:"תעודת בגרות איכותית + תעודה טכנולוגית",
+  bio:"תעודת בגרות במקצוע ביולוגיה",
+  chem:"תעודת בגרות במקצוע כימיה",
+  physics:"תעודת בגרות במקצוע פיזיקה",
+  social:"תעודת בגרות עם פסיכולוגיה, סוציולוגיה ויחידת חקר",
+  geo:"תעודת בגרות במקצוע גיאוגרפיה",
+  shoah:"תעודת בגרות ב-5 יח״ל, עם עבודת גמר",
+  french:"תעודת בגרות ב-5 יח״ל",
+  arabic:"תעודת בגרות ב-5 יח״ל",
+  russian:"תעודת בגרות ברוסית",
+  dance:"תעודת בגרות בהיקף של עד 10 יח״ל, ואפשר גם תעודת מדריך/ת מחול",
+  art:"תעודת בגרות עם תערוכה משלכם",
+  film:"תעודת בגרות עם סרט גמר שהפקתם",
+  theatre:"תעודת בגרות עם הפקת גמר על הבמה"
+};
+var NO_REQ="האתר לא מציין תנאי קבלה מיוחדים. כדאי לברר אצל רכז/ת השכבה או היועצת.";
+
+var TRACKS=[
+{id:"biotech",slug:"ביוטכנולוגיה",cat:"sci",name:"ביוטכנולוגיה",
+ tag:"מעבדה, גנטיקה ותעשייה: תאים ו-DNA שמייצרים ומרפאים.",
+ learn:["הנדסה גנטית, תרביות תאים ואימונו-דיאגנוסטיקה","ביו-אינפורמטיקה ומעבדות מתקדמות בביוכימיה","פרויקט גמר ביישומים בביוטכנולוגיה"],
+ req:"שלושה מקצועות ברמה של 5 יח״ל: תהליכים ביוטכנולוגיים, יישומים בביוטכנולוגיה (עבודת גמר) ומקצוע מדעי לבחירה: פיזיקה, כימיה או ביולוגיה.",
+ gives:"תעודת בגרות + תעודה טכנולוגית. בונוס בקבלה למוסדות להשכלה גבוהה. בטכניון הבונוס מוגדל (30 נקודות) ויש קבלה בלי פסיכומטרי לפקולטה להנדסת ביוטכנולוגיה ומזון.",
+ next:["הנדסת ביוטכנולוגיה ומזון והמשך אקדמי","תואר הנדסי במסגרת עתודה טכנולוגית"],
+ later:["תעשייה","רפואה","חקלאות","מחקר"],
+ kw:"גנטיקה dna תאים מעבדה ביולוגיה מזון רפואה"},
+{id:"industry",slug:"תעשיה-וניהול",cat:"sci",name:"תעשייה וניהול",
+ tag:"איך מנהלים מפעל, מוצר וצוות: תכנון, עלויות וכדאיות כלכלית.",
+ learn:["איך משאבים הופכים למוצרים ולשירותים","תכנון משאבי הארגון, ניתוח כדאיות כלכלית ותמחיר מוצרים","גיליון אלקטרוני לעיבוד נתונים, מעבדות מחשב וסיורים במפעלים"],
+ req:"5 יח״ל באחד ממקצועות המדעים (פיזיקה, כימיה או ביולוגיה), 5 יח״ל ניהול התפעול (כיתות י׳–י״א) ו-5 יח״ל ניהול הייצור עם פרויקט גמר (כיתה י״ב).",
+ gives:"תעודת בגרות + תעודה טכנולוגית, ובונוס בקבלה ללימודים אקדמיים.",
+ next:["הנדסת תעשייה וניהול","מנהל עסקים","לוגיסטיקה, שיווק, ניתוח מערכות מידע וניהול ספינות"],
+ later:[],kw:"עסקים ניהול כלכלה לוגיסטיקה הנדסה מפעל שיווק"},
+{id:"cs",slug:"מדעי-המחשב",cat:"sci",name:"מדעי המחשב",
+ tag:"חשיבה של מתכנתים: אלגוריתמים, לוגיקה ופתרון בעיות.",
+ learn:["מושגי יסוד ועקרונות המבנה של מערכות ממוחשבות","עקרונות אלגוריתמיים ולוגיים, בכמה שפות וטכנולוגיות","ניתוח בעיות, בניית פתרון והערכה ביקורתית שלו"],
+ req:null,
+ gives:"תעודת בגרות + תעודה טכנולוגית.",
+ next:["תואר במדעי המחשב (3 שנים) או בהנדסת תוכנה (4 שנים)","מערכות מידע ותקשורת, או לימודים דו-חוגיים עם מתמטיקה, פיזיקה והנדסת חשמל","יחידות בצה״ל כמו תקשוב, ממר״ם וסייבר מודיעין"],
+ later:["הייטק: לפי האתר, בוגרי יחידות כאלה מתקבלים לשוק ההייטק גם בלי תואר"],
+ kw:"תכנות הייטק סייבר מחשבים תוכנה קוד אלגוריתמים"},
+{id:"bio",slug:"ביולוגיה",cat:"sci",name:"ביולוגיה",
+ tag:"להבין את גוף האדם, את הטבע ואת מה שהמדע משנה בחיים שלנו.",
+ learn:["גוף האדם","אקולוגיה, וקשר לנוף הארץ, לחי ולצומח","עקרונות המחקר המדעי, וגם שאלות מוסריות כמו שיבוט וחקר הגנום"],
+ req:null,
+ gives:"יתרון בלימודי רפואה, סיעוד, רוקחות ועוד.",
+ next:["רפואה, סיעוד, רוקחות ותזונה","ביוטכנולוגיה, הנדסה גנטית והנדסה רפואית","ריפוי בעיסוק, פיזיותרפיה, וטרינריה ופסיכולוגיה"],
+ later:[],kw:"רפואה טבע גוף אדם אקולוגיה גנטיקה"},
+{id:"chem",slug:"כימיה",cat:"sci",name:"כימיה",
+ tag:"מדע החומרים: ממה הכול עשוי ואיך יוצרים חומרים חדשים.",
+ learn:["תכונות ותגובות של חומרים, והקשר בין מבנה החומר לתכונותיו","יצירת חומרים חדשים וביצוע מחקרים","השפעת חומרים על הסביבה ודרכים להגן עליה"],
+ req:null,
+ gives:"כימיה היא מקצוע חובה בהרבה מקצועות אקדמיים.",
+ next:["רפואה, ביולוגיה וכל מקצועות ההנדסה","מדעי המזון, ביוטכנולוגיה, וטרינריה, סיעוד ורוקחות","מיקרו-אלקטרוניקה, גיאולוגיה, ביו-אינפורמטיקה ומדעי הסביבה"],
+ later:["לפי האתר, בישראל יש מעל 200 חברות כימיה, וגם חברות בננוטכנולוגיה, תרופות, אנרגיה ירוקה, חקלאות וביטחון"],
+ kw:"חומרים מעבדה תרופות רפואה הנדסה"},
+{id:"physics",slug:"פיזיקה",cat:"sci",name:"פיזיקה",
+ tag:"החוקים שמאחורי הטכנולוגיה: מחשמל ועד רנטגן ויקום.",
+ learn:["שאלות מהחיים: זרם חשמלי, מיקרוגל, CT ו-MRI, חומר רדיואקטיבי","הדגמות במעבדה, אנימציות והדמיות מחשב","תחרויות ארציות: אולימפיאדה וטורניר הכספות של מכון ויצמן"],
+ req:null,
+ gives:"מגמה גדולה ומוכרת: 4 מורים, בין 50 ל-70 בוגרים בשנה ומעבדה מצוידת.",
+ next:["בצה״ל מאתרים תלמידי פיזיקה ומציעים להם קורסים מעניינים","לימודים בבן-גוריון, בתל אביב, בטכניון ובמוסדות נוספים","הנדסת תעשייה וניהול, מנהל עסקים, לוגיסטיקה וניתוח מערכות מידע"],
+ later:[],kw:"הנדסה חשמל יקום כוח אנרגיה"},
+{id:"social",slug:"מדעי-החברה",cat:"soc",name:"מדעי החברה",
+ tag:"להבין אנשים וחברה: פסיכולוגיה, סוציולוגיה ומחקר.",
+ learn:["פסיכולוגיה (י׳–י״א): רגשות, לחץ והתמודדות, דעות קדומות, פסיכולוגיה חיובית והתפתחות האדם","סוציולוגיה (י״ב): משפחה, תרבות נעורים, גלובליזציה ודינמיקה קבוצתית","יחידת חקר: מתנסים בכלי מחקר בנושא קרוב לעולמכם"],
+ req:null,
+ gives:"כלים לחשיבה מדעית ולמידת חקר עצמאית.",
+ next:["תואר ראשון במדעי החברה"],
+ later:["עבודה סוציאלית","ייעוץ ארגוני","ניהול משאבי אנוש","מנהל עסקים"],
+ kw:"פסיכולוגיה סוציולוגיה אנשים חברה רגשות"},
+{id:"geo",slug:"גיאוגרפיה",cat:"soc",name:"גיאוגרפיה, אדם וסביבה",
+ tag:"מרחב, אנשים וסביבה: למה יש פערים ואיך אפשר לצמצם אותם.",
+ learn:["שינויי אקלים והתחממות כדור הארץ","גלובליזציה והשפעתה על כלכלה ותרבות","תכנון ופיתוח בר-קיימא, שונות ואי-שוויון במרחב"],
+ req:null,
+ gives:"יכולת להעריך מהר בעיות מורכבות ולקבל החלטות מנומקות.",
+ next:["תואר ראשון בגיאוגרפיה: מערכות מידע גיאוגרפי (GIS) וחישה מרחוק","תפקידים שונים בצה״ל"],
+ later:["תכנון ערים","חיזוי מזג אוויר","הדרכת תיירות","משרד איכות הסביבה, רשויות מקומיות ורשות הטבע והגנים"],
+ kw:"אקלים מפות תכנון סביבה gis"},
+{id:"shoah",slug:"משואהלתקומה",cat:"soc",name:"משואה לתקומה",
+ tag:"זיכרון השואה, מחקר ועבודת גמר, בליווי בית הספר של יד ושם.",
+ learn:["כתיבת עבודות שמתרחבות עד שאלת חקר ועבודת גמר","סדנאות, ארגון טקסים וסיורים (יד ושם, בית לוחמי הגטאות ועוד)","למידה בין-תחומית, למידת עמיתים והתנדבות"],
+ req:"התוכנית מתחילה כבר בכיתה ט׳, במסע חווייתי בנושא השואה. בכיתה י׳ אפשר להצטרף ללימודי המגמה בהיקף של 5 יח״ל.",
+ gives:"מיומנויות של כתיבה אקדמית, שאלת חקר וסינתזה של מאמרים. יש מסע בית ספרי לפולין, ואפשרות להצטרף למשלחת חילופי נוער לברלין.",
+ next:[],later:[],kw:"שואה היסטוריה זיכרון יד ושם פולין"},
+{id:"french",slug:"צרפתית",cat:"lang",name:"צרפתית",
+ tag:"שפה בינלאומית ותרבות עשירה, ב-5 יחידות.",
+ learn:["דיבור, קריאה וכתיבה, וכללי השפה","היכרות עם התרבות הצרפתית דרך סרטונים, משחקים ושירים","למידה בקבוצה קטנה ויחס אישי"],
+ req:"המגמה מיועדת לתלמידים שלמדו צרפתית מכיתה ז׳ עד ט׳, ולתלמידים דוברי צרפתית.",
+ gives:"5 יח״ל נותנות בונוס בממוצע האוניברסיטאי ופטור משפה זרה בהמשך תואר שני.",
+ next:["בצה״ל יש עדיפות לתפקידים חשובים, ובהם מודיעין וחיל האוויר","5 יח״ל בצרפתית נחשבות יוקרתיות בכניסה לאוניברסיטה"],
+ later:["פרסום ושיווק","יחסים בין-לאומיים ויחסי ציבור","תקשוב, מסחר ותיירות"],
+ kw:"שפה צרפת תרבות"},
+{id:"arabic",slug:"ערבית",cat:"lang",name:"ערבית",
+ tag:"השפה הרשמית השנייה בישראל, ברמה של 5 יחידות.",
+ learn:["דיבור, האזנה, קריאה וכתיבה","טקסטים אותנטיים מהעיתונות הערבית, שירה וסיפורים של סופרים מודרניים","אקטואליה, תחביר ופועל"],
+ req:null,
+ gives:"הציון הממוצע הארצי בבגרות בערבית הוא מהגבוהים בארץ.",
+ next:["תפקידים מובחרים בחיל המודיעין, כולל פרויקטים שמשלבים ערבית ומחשבים","מסלול עתודה וקורסים קדם-צבאיים","תואר בשפה וספרות ערבית או בלימודי המזרח התיכון"],
+ later:["משטרה: מודיעין וחקירות","שב״כ, מוסד, משרד הביטחון ומשרד החוץ","תרגום, תיירות ותקשורת","חברות הייטק"],
+ kw:"שפה מודיעין ערבית צבא"},
+{id:"russian",slug:"רוסית",cat:"lang",name:"רוסית",
+ tag:"שפה, ספרות ותרבות: רוסית כגשר לעולם ולמשפחה.",
+ learn:["קולנוע, תיאטרון, טלוויזיה, מדע, אמנות וצבא","קריאת מאמרים וסיפורים, ושימוש במידע מהרשת","הבעה עצמית בכתב ובעל פה"],
+ req:null,
+ gives:"שפה נוספת, ידע כללי רחב ותקשורת עמוקה יותר עם בני משפחה דוברי רוסית. בישראל מדברים רוסית כמיליון איש.",
+ next:[],later:[],kw:"שפה רוסיה ספרות תרבות"},
+{id:"dance",slug:"מחול",cat:"art",name:"מחול",
+ tag:"לרקוד, ליצור כוריאוגרפיה ולקבל על זה בגרות.",
+ learn:["מחול מודרני ובלט קלאסי: יציבה, גמישות וקואורדינציה","קומפוזיציה: יצירת קומבינציות וכוריאוגרפיה","רפרטואר למופעים וטקסים בבית הספר ובעיר"],
+ req:"המגמה מיועדת לתלמידים בעלי רקע מוכח בלימודי מחול, ולמי שמוכנים להתחייב ללימודי מחול בהיקף משמעותי.",
+ gives:"הכרה בתעודת הבגרות של עד 10 יח״ל. למעוניינים: תעודה מקצועית של מדריך/ת מחול.",
+ next:["השתלבות כמדריך/ת במוסדות חינוך בלתי פורמלי","לימודים במוסדות להשכלה גבוהה (למי שזכאי לבגרות)"],
+ later:["קריירה כרקדנים ויוצרים במחול"],kw:"ריקוד בלט תנועה כוריאוגרפיה הופעה"},
+{id:"art",slug:"אומנות",cat:"art",name:"אומנות",
+ tag:"שלוש שנים של יצירה, מוזיאונים ותערוכה משלכם.",
+ learn:["תולדות האמנות במאות ה-19 וה-20 ובאמנות הישראלית","סדנה: ציור, פיסול, רישום וטכניקות מעורבות","סיורים במוזיאונים ובגלריות בכל הארץ"],
+ req:null,
+ gives:"בחינה חיצונית של 3 יח״ל בניתוח יצירות והיסטוריה של האמנות, ו-2 יח״ל של סדנה שבסופה מעלים תערוכה משותפת במקום בחינה.",
+ next:["לימודים גבוהים באמנות פלסטית ובתולדות האמנות"],
+ later:[],kw:"ציור פיסול יצירה תערוכה עיצוב"},
+{id:"film",slug:"קולנוע",cat:"art",name:"קולנוע",
+ tag:"לצפות בעין ביקורתית וליצור סרט משלכם.",
+ learn:["י׳: יסודות השפה הקולנועית ותסריטאות","י״א: תולדות הקולנוע וז׳אנרים, הפקה, צילום, בימוי ועריכה","י״ב: יוצרים פורצי דרך, קולנוע תיעודי וישראלי, והפקת סרט גמר"],
+ req:null,
+ gives:"סרט גמר תיעודי או עלילתי שאתם מפיקים בעצמכם.",
+ next:["תואר ראשון, שני ושלישי בקולנוע באוניברסיטאות ובמכללות","תואר ראשון בהוראת הקולנוע"],
+ later:["תעשיית הקולנוע והמדיה"],kw:"סרטים תסריט צילום בימוי עריכה מדיה"},
+{id:"theatre",slug:"תיאטרון",cat:"art",name:"תיאטרון",
+ tag:"משחק, בימוי והפקה על במה אמיתית.",
+ learn:["משחק, בימוי, כתיבה יוצרת, ניתוח מחזות ותולדות התיאטרון","הפקה, תנועה ועיצוב: תפאורה, תאורה ותלבושות","צפייה בהצגות בתיאטרון הרפרטוארי ובפרינג׳"],
+ req:null,
+ gives:"הפקות הבגרות של שכבת י״ב, שבהן עובדים כשחקנים או כצוות טכני.",
+ next:["יתרון בקבלה לחוג לתיאטרון באוניברסיטאות ולבתי ספר למשחק"],
+ later:[],kw:"משחק במה הצגות בימוי דרמה"}
+];
+
+/* ---------- helpers ---------- */
+var $=function(s,r){return (r||document).querySelector(s)};
+function el(tag,attrs,html){var e=document.createElement(tag);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function url(t){return SITE+encodeURIComponent(t.slug)}
+
+var favs=[];
+try{favs=JSON.parse(localStorage.getItem("favs")||"[]")}catch(e){favs=[]}
+function saveFavs(){try{localStorage.setItem("favs",JSON.stringify(favs))}catch(e){}}
+function isFav(id){return favs.indexOf(id)>-1}
+function toggleFav(id){var i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);saveFavs();refresh()}
+
+var STAR='<svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+
+/* ---------- list ---------- */
+var state={cat:"all",q:"",view:"All"};
+
+function matches(t){
+  if(state.cat!=="all"&&t.cat!==state.cat)return false;
+  var q=state.q.trim().toLowerCase();
+  if(!q)return true;
+  var hay=(t.name+" "+t.tag+" "+t.kw+" "+t.learn.join(" ")+" "+t.next.join(" ")+" "+t.later.join(" ")).toLowerCase();
+  return hay.indexOf(q)>-1;
+}
+
+function tile(t){
+  var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
+  b.innerHTML='<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  $(".open",b).addEventListener("click",function(){openTrack(t.id)});
+  var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
+  s.addEventListener("click",function(){toggleFav(t.id)});
+  b.appendChild(s);
+  return b;
+}
+
+function renderChips(){
+  var box=$("#chips");box.innerHTML="";
+  var items=[["all","הכל"]].concat(Object.keys(CATS).map(function(k){return [k,CATS[k].name]}));
+  items.forEach(function(it){
+    var c=el("button",{"class":"chip","type":"button","aria-pressed":state.cat===it[0]},esc(it[1]));
+    c.addEventListener("click",function(){state.cat=it[0];renderChips();renderGroups()});
+    box.appendChild(c);
+  });
+}
+
+function renderGroups(){
+  var root=$("#groups");root.innerHTML="";
+  var any=false;
+  Object.keys(CATS).forEach(function(k){
+    var list=TRACKS.filter(function(t){return t.cat===k&&matches(t)});
+    if(!list.length)return;any=true;
+    var g=el("section",{"class":"group"});
+    g.appendChild(el("h2",null,esc(CATS[k].name)+' <span>'+list.length+'</span>'));
+    var grid=el("div",{"class":"grid"});
+    list.forEach(function(t){grid.appendChild(tile(t))});
+    g.appendChild(grid);root.appendChild(g);
+  });
+  if(!any)root.appendChild(el("div",{"class":"empty"},"לא נמצאה מגמה שמתאימה לחיפוש.<br>נסו מילה אחרת או נקו את הסינון."));
+}
+
+function renderMine(){
+  var grid=$("#mineGrid");grid.innerHTML="";
+  var list=TRACKS.filter(function(t){return isFav(t.id)});
+  list.forEach(function(t){grid.appendChild(tile(t))});
+  $("#mineEmpty").hidden=list.length>0;
+  var bd=$("#badge");bd.hidden=!list.length;bd.textContent=list.length;
+}
+
+function refresh(){
+  renderGroups();renderMine();
+  var id=currentId();if(id)renderSheet(id,true);
+}
+
+/* ---------- views ---------- */
+function setView(v){
+  state.view=v;
+  ["All","Mine","Help"].forEach(function(n){$("#view"+n).hidden=(n!==v)});
+  document.querySelectorAll(".nav button").forEach(function(b){
+    if(b.dataset.view===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  });
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav button").forEach(function(b){
+  b.addEventListener("click",function(){
+    if(currentId())closeSheet();
+    setView(b.dataset.view);
+  });
+});
+$("#q").addEventListener("input",function(e){state.q=e.target.value;renderGroups()});
+
+/* ---------- detail sheet ---------- */
+function currentId(){var m=location.hash.match(/^#\/(.+)$/);return m?decodeURIComponent(m[1]):null}
+function find(id){return TRACKS.filter(function(t){return t.id===id})[0]}
+
+function list(items){return '<ul>'+items.map(function(i){return '<li>'+esc(i)+'</li>'}).join("")+'</ul>'}
+
+function renderSheet(id,keepScroll){
+  var t=find(id),sh=$("#sheet");
+  if(!t){return}
+  var c=CATS[t.cat].color;
+  var route='<div class="route"><h3>לאן זה מוביל</h3>';
+  route+='<div class="stop now"><b>בסיום התיכון</b><ul><li>'+esc(OUT[t.id])+'</li></ul></div>';
+  if(t.next.length)route+='<div class="stop"><b>אחרי התיכון</b>'+list(t.next)+'</div>';
+  if(t.later.length)route+='<div class="stop"><b>בעולם העבודה</b>'+list(t.later)+'</div>';
+  if(!t.next.length&&!t.later.length)route+='<div class="stop"><b>אחרי התיכון</b><ul><li>האתר לא מפרט נתיבי המשך. כדאי לשאול את רכז/ת המגמה.</li></ul></div>';
+  route+='</div>';
+  var top=keepScroll?sh.scrollTop:0;
+  sh.style.setProperty("--c",c);
+  sh.innerHTML=
+   '<div class="sh-head"><div class="sh-bar">'+
+   '<button class="ico" id="shBack" aria-label="חזרה לרשימה"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>'+
+   '<div class="right"><button class="ico" id="shShare" aria-label="שיתוף"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>'+
+   '<button class="ico" id="shFav" aria-pressed="'+isFav(t.id)+'" aria-label="שמירה ברשימה שלי">'+STAR+'</button></div></div>'+
+   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p></div>'+
+   '<div class="sh-body">'+
+   '<section class="blk"><h3>מה לומדים</h3>'+list(t.learn)+'</section>'+
+   '<section class="blk"><h3>מה נדרש</h3>'+(t.req?'<p>'+esc(t.req)+'</p>':'<p class="muted">'+esc(NO_REQ)+'</p>')+'</section>'+
+   '<section class="blk"><h3>מה מקבלים</h3><p>'+esc(t.gives)+'</p></section>'+
+   route+
+   '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
+   '</div>';
+  $("#shBack").addEventListener("click",function(){history.length>1&&sessionStorageSafe()?history.back():closeSheet()});
+  $("#shFav").addEventListener("click",function(){toggleFav(t.id)});
+  $("#shShare").addEventListener("click",function(){
+    var u=location.href.split("#")[0]+"#/"+t.id;
+    var data={title:"מגמת "+t.name+" – מקיף ז׳ אשדוד",text:t.tag,url:u};
+    if(navigator.share){navigator.share(data).catch(function(){})}
+    else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){toast("הקישור הועתק")})}
+  });
+  sh.scrollTop=top;
+}
+function sessionStorageSafe(){return window.__opened===true}
+
+function openTrack(id){
+  window.__opened=true;
+  history.pushState({id:id},"","#/"+encodeURIComponent(id));
+  showSheet(id);
+}
+function showSheet(id){
+  renderSheet(id,false);
+  var sh=$("#sheet");sh.classList.add("open");sh.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  setTimeout(function(){var b=$("#shBack");b&&b.focus({preventScroll:true})},300);
+}
+function closeSheet(){
+  var sh=$("#sheet");sh.classList.remove("open");sh.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+  if(currentId())history.replaceState(null,"",location.pathname+location.search);
+}
+window.addEventListener("popstate",function(){
+  var id=currentId();
+  if(id&&find(id))showSheet(id);else{
+    var sh=$("#sheet");sh.classList.remove("open");sh.setAttribute("aria-hidden","true");document.body.style.overflow="";
+  }
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&currentId())history.back()});
+
+function toast(msg){
+  var t=el("div",{style:"position:fixed;z-index:60;inset-inline:16px;bottom:96px;margin:auto;max-width:320px;background:#16162B;color:#fff;padding:12px 16px;border-radius:12px;text-align:center"},esc(msg));
+  document.body.appendChild(t);setTimeout(function(){t.remove()},2200);
+}
+
+/* ---------- install ---------- */
+var deferred=null;
+window.addEventListener("beforeinstallprompt",function(e){
+  e.preventDefault();deferred=e;$("#installBtn").classList.add("show");
+});
+$("#installBtn").addEventListener("click",function(){
+  if(!deferred)return;
+  deferred.prompt();deferred.userChoice.finally(function(){deferred=null;$("#installBtn").classList.remove("show")});
+});
+window.addEventListener("appinstalled",function(){$("#installBtn").classList.remove("show")});
+(function(){
+  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+  if(ios&&!standalone){
+    var b=$("#installBtn");b.textContent="איך מתקינים?";b.classList.add("show");
+    b.addEventListener("click",function(){setView("Help");setTimeout(function(){window.scrollTo(0,document.body.scrollHeight)},50)});
+  }
+})();
+
+/* ---------- boot ---------- */
+renderChips();renderGroups();renderMine();
+var first=currentId();
+if(first&&find(first))showSheet(first);
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>

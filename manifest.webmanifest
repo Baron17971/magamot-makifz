@@ -1,0 +1,17 @@
+{
+  "name": "איזו מגמה? מקיף ז׳ אשדוד",
+  "short_name": "איזו מגמה?",
+  "description": "מדריך קצר לכל המגמות של כיתה י׳ במקיף ז׳ אשדוד",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#16162B",
+  "theme_color": "#16162B",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}

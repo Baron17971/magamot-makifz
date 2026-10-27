@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>איזו מגמה? מקיף ז׳ אשדוד</title>
+<meta name="theme-color" content="#16162B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="איזו מגמה?">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+html,body{margin:0;height:100%;background:#16162B;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:"Rubik","Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+.splash{position:fixed;inset:0;overflow:hidden;display:grid;place-items:center;container-type:size}
+.splash{background:#16162B}
+.frame{position:relative;width:min(100cqw,56.25cqh);height:min(100cqh,177.78cqw);background:url(cover.webp) center/100% 100% no-repeat}
+button{position:absolute;left:50%;top:24.5%;transform:translateX(-50%);border:0;border-radius:999px;background:#FFB400;color:#16162B;font:inherit;font-weight:700;font-size:clamp(20px,6.2cqw,32px);padding:.5em 1.1em;box-shadow:0 4px 14px rgba(0,0,0,.4);cursor:pointer;touch-action:manipulation}
+button:active{transform:translateX(-50%) scale(.97)}
+@media (min-aspect-ratio:1/1){
+.frame{width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);flex:none;background-image:url(cover-hd.webp)}
+button{left:49%;top:26.6%;font-size:clamp(16px,3.1cqh,30px);padding:.4em 1.1em}
+}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+</style>
+</head>
+<body>
+<main class="splash"><div class="frame"><button type="button" id="go">כניסה</button></div></main>
+<script>
+(function(){
+  if(/^#\/./.test(location.hash)){location.replace("app.html"+location.hash);return}
+  document.getElementById("go").addEventListener("click",function(){location.href="app.html"});
+  if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+})();
+</script>
+</body>
+</html>
