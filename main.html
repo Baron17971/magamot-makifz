@@ -255,6 +255,17 @@ a{color:inherit}
  .blk.off{grid-column:auto}
  .blk p,.blk li{font-size:18px}
 }
+
+/* ---- v3: content-height cards (masonry columns), star under the title ---- */
+.sh-body{grid-template-columns:1fr!important}
+.cols{columns:1;column-gap:22px}
+.cols .blk{break-inside:avoid;-webkit-column-break-inside:avoid;display:block;margin:0 0 20px;grid-column:auto!important}
+@media(min-width:900px){.cols{columns:2}}
+@media(min-width:1400px){.cols{columns:3}}
+.sh-txt .starp.big{margin-top:22px;height:54px;padding:0 26px;font-size:18px}
+.sh-txt .starp.big svg{width:24px;height:24px}
+.pill.mini{background:rgba(22,22,43,.55);color:#fff}
+.pill.mini[aria-pressed="true"] svg{fill:#FFB400;stroke:#FFB400}
 </style>
 </head>
 <body>
@@ -503,22 +514,22 @@ function renderSheet(id,keepScroll){
    '<div class="sh-bar">'+
    '<button class="pill back" id="shBack" aria-label="חזרה לרשימה"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg><span>חזרה</span></button>'+
    '<div class="right"><button class="pill share" id="shShare" aria-label="שיתוף" title="שיתוף"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>'+
-   '<button class="pill starp" id="shFav" aria-pressed="'+isFav(t.id)+'" aria-label="שמירה ברשימה שלי">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div>'+
+   '<button class="pill share favbtn mini" aria-pressed="'+isFav(t.id)+'" aria-label="שמירה ברשימה שלי" title="שמירה ברשימה שלי">'+STAR+'</button></div></div>'+
    '<div class="sh-head" style="--img:url(img/'+t.id+'.webp)"><div class="sh-bg"></div><div class="sh-in">'+
    '<div class="sh-hero"><div class="sh-pic"><img src="img/'+t.id+'.webp" alt="" width="640" height="360"></div><div class="sh-txt">'+
-   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div></div></div>'+
+   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
    (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
-   '<section class="blk'+(t.how&&t.how.length?'':' solo')+'">'+bh("book","מה לומדים")+list(t.learn)+'</section>'+
+   '<div class="cols">'+'<section class="blk'+(t.how&&t.how.length?'':' solo')+'">'+bh("book","מה לומדים")+list(t.learn)+'</section>'+
    (t.how&&t.how.length?'<section class="blk">'+bh("spark","איך לומדים")+list(t.how)+'</section>':'')+
    (t.off&&t.off.length?'<section class="blk off">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
    '<section class="blk">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
-   '<section class="blk gives">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+
+   '<section class="blk gives">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+'</div>'+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
    '</div>';
   $("#shBack").addEventListener("click",function(){history.length>1&&sessionStorageSafe()?history.back():closeSheet()});
-  $("#shFav").addEventListener("click",function(){toggleFav(t.id)});
+  Array.prototype.forEach.call(sh.querySelectorAll(".favbtn"),function(b){b.addEventListener("click",function(){toggleFav(t.id)})});
   $("#shShare").addEventListener("click",function(){
     var u=location.href.split("#")[0]+"#/"+t.id;
     var data={title:"מגמת "+t.name+" – מקיף ז׳ אשדוד",text:t.tag,url:u};
