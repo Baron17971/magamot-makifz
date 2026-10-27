@@ -277,6 +277,14 @@ a{color:inherit}
  .rw{flex-direction:row;align-items:stretch;gap:22px}
  .rw>.blk{flex:var(--w) 1 0;min-width:300px}
 }
+
+/* ---- v5: route as horizontal journey on wide screens ---- */
+@media(min-width:900px){
+ .route{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));column-gap:36px;padding:26px 32px 14px}
+ .route h3{grid-column:1/-1;font-size:22px}
+ .route .stop::before{display:none}
+ .route .stop{padding-bottom:16px}
+}
 </style>
 </head>
 <body>
