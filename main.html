@@ -94,6 +94,8 @@ a{color:inherit}
 }
 .tile::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:6px;background:var(--c)}
 .tile:active{transform:scale(.98)}
+.tile .ill{margin:-16px -16px 8px -20px;height:96px;background:color-mix(in srgb,var(--c) 10%,#fff);overflow:hidden}
+.tile .ill svg{display:block;width:100%;height:100%}
 .tile .open{all:unset;cursor:pointer;display:block}
 .tile .open::after{content:"";position:absolute;inset:0}
 .tile .open:focus-visible{outline:none}
@@ -399,6 +401,12 @@ var TRACKS=[
  later:[],kw:"משחק במה הצגות בימוי דרמה"}
 ];
 
+var ILL={
+ cs:'<svg viewBox="0 0 240 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="20" cy="86" r="34" fill="var(--c)" opacity=".12"/><circle cx="226" cy="14" r="40" fill="var(--c)" opacity=".1"/><rect x="66" y="12" width="108" height="66" rx="9" fill="#fff" stroke="var(--c)" stroke-width="5"/><path d="M104 36 88 47l16 11M136 36l16 11-16 11" fill="none" stroke="var(--c)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M125 31 115 63" stroke="#FFB400" stroke-width="6" stroke-linecap="round"/><path d="M96 80h48l6 10H90z" fill="var(--c)"/><rect x="26" y="26" width="26" height="8" rx="4" fill="var(--c)" opacity=".35"/><rect x="26" y="40" width="16" height="8" rx="4" fill="#FFB400"/><rect x="190" y="52" width="26" height="8" rx="4" fill="var(--c)" opacity=".35"/><rect x="198" y="66" width="16" height="8" rx="4" fill="#FFB400"/></svg>',
+ biotech:'<svg viewBox="0 0 240 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="20" cy="86" r="34" fill="var(--c)" opacity=".12"/><circle cx="226" cy="14" r="40" fill="var(--c)" opacity=".1"/><path d="M36.0 58.0 L36.0 42.0 M48.0 71.0 L48.0 29.0 M60.0 76.0 L60.0 24.0 M72.0 71.0 L72.0 29.0 M84.0 58.0 L84.0 42.0 M96.0 42.0 L96.0 58.0 M108.0 29.0 L108.0 71.0 M120.0 24.0 L120.0 76.0 M132.0 29.0 L132.0 71.0 M144.0 42.0 L144.0 58.0 M156.0 58.0 L156.0 42.0 M168.0 71.0 L168.0 29.0 M180.0 76.0 L180.0 24.0 M192.0 71.0 L192.0 29.0 M204.0 58.0 L204.0 42.0 " stroke="#FFB400" stroke-width="3" stroke-linecap="round"/><path d="M30.0 50.0 L33.0 54.1 L36.0 58.0 L39.0 61.8 L42.0 65.3 L45.0 68.4 L48.0 71.0 L51.0 73.2 L54.0 74.7 L57.0 75.7 L60.0 76.0 L63.0 75.7 L66.0 74.7 L69.0 73.2 L72.0 71.0 L75.0 68.4 L78.0 65.3 L81.0 61.8 L84.0 58.0 L87.0 54.1 L90.0 50.0 L93.0 45.9 L96.0 42.0 L99.0 38.2 L102.0 34.7 L105.0 31.6 L108.0 29.0 L111.0 26.8 L114.0 25.3 L117.0 24.3 L120.0 24.0 L123.0 24.3 L126.0 25.3 L129.0 26.8 L132.0 29.0 L135.0 31.6 L138.0 34.7 L141.0 38.2 L144.0 42.0 L147.0 45.9 L150.0 50.0 L153.0 54.1 L156.0 58.0 L159.0 61.8 L162.0 65.3 L165.0 68.4 L168.0 71.0 L171.0 73.2 L174.0 74.7 L177.0 75.7 L180.0 76.0 L183.0 75.7 L186.0 74.7 L189.0 73.2 L192.0 71.0 L195.0 68.4 L198.0 65.3 L201.0 61.8 L204.0 58.0 L207.0 54.1 L210.0 50.0" fill="none" stroke="var(--c)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M30.0 50.0 L33.0 45.9 L36.0 42.0 L39.0 38.2 L42.0 34.7 L45.0 31.6 L48.0 29.0 L51.0 26.8 L54.0 25.3 L57.0 24.3 L60.0 24.0 L63.0 24.3 L66.0 25.3 L69.0 26.8 L72.0 29.0 L75.0 31.6 L78.0 34.7 L81.0 38.2 L84.0 42.0 L87.0 45.9 L90.0 50.0 L93.0 54.1 L96.0 58.0 L99.0 61.8 L102.0 65.3 L105.0 68.4 L108.0 71.0 L111.0 73.2 L114.0 74.7 L117.0 75.7 L120.0 76.0 L123.0 75.7 L126.0 74.7 L129.0 73.2 L132.0 71.0 L135.0 68.4 L138.0 65.3 L141.0 61.8 L144.0 58.0 L147.0 54.1 L150.0 50.0 L153.0 45.9 L156.0 42.0 L159.0 38.2 L162.0 34.7 L165.0 31.6 L168.0 29.0 L171.0 26.8 L174.0 25.3 L177.0 24.3 L180.0 24.0 L183.0 24.3 L186.0 25.3 L189.0 26.8 L192.0 29.0 L195.0 31.6 L198.0 34.7 L201.0 38.2 L204.0 42.0 L207.0 45.9 L210.0 50.0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/><circle cx="30" cy="50" r="0"/></svg>',
+ art:'<svg viewBox="0 0 240 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="20" cy="86" r="34" fill="var(--c)" opacity=".12"/><circle cx="226" cy="14" r="40" fill="var(--c)" opacity=".1"/><g stroke="var(--c)" stroke-width="5" stroke-linecap="round"><path d="M92 74 78 94M148 74l14 20M120 70v26"/></g><rect x="70" y="10" width="100" height="64" rx="5" fill="#fff" stroke="var(--c)" stroke-width="5"/><path d="M82 60c12-26 22 10 36-14s24 6 40-12" fill="none" stroke="#FFB400" stroke-width="7" stroke-linecap="round"/><circle cx="96" cy="30" r="7" fill="var(--c)"/><circle cx="148" cy="56" r="6" fill="#E04F8A"/><ellipse cx="204" cy="66" rx="24" ry="17" fill="#fff" stroke="var(--c)" stroke-width="4"/><circle cx="195" cy="60" r="4" fill="#FFB400"/><circle cx="208" cy="57" r="4" fill="var(--c)"/><circle cx="214" cy="70" r="4" fill="#E04F8A"/></svg>'
+};
+
 /* ---------- helpers ---------- */
 var $=function(s,r){return (r||document).querySelector(s)};
 function el(tag,attrs,html){var e=document.createElement(tag);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(html!=null)e.innerHTML=html;return e}
@@ -426,7 +434,7 @@ function matches(t){
 
 function tile(t){
   var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
-  b.innerHTML='<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  b.innerHTML=(ILL[t.id]?'<div class="ill">'+ILL[t.id]+'</div>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
   s.addEventListener("click",function(){toggleFav(t.id)});
