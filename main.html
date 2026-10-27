@@ -269,6 +269,14 @@ a{color:inherit}
 
 .blk h4.sub{display:flex;align-items:center;gap:10px;font-size:18px;margin:20px 0 8px;padding-top:16px;border-top:1px dashed var(--line)}
 .bi.sm{width:30px;height:30px;border-radius:10px}.bi.sm svg{width:17px;height:17px}
+
+/* ---- v4: rows with widths proportional to text ---- */
+.rw{display:flex;flex-direction:column;gap:20px}
+.rw>.blk{margin:0}
+@media(min-width:900px){
+ .rw{flex-direction:row;align-items:stretch;gap:22px}
+ .rw>.blk{flex:var(--w) 1 0;min-width:300px}
+}
 </style>
 </head>
 <body>
@@ -501,6 +509,7 @@ function list(items){return '<ul>'+items.map(function(i){return '<li>'+esc(i)+'<
 
 var ICO={info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/>',book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5v16"/><path d="M9 8h7"/>',spark:'<path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z"/><path d="M19 16v4M17 18h4"/>',check:'<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4.5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/>',star:'<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/>'};
 function bh(k,t){return '<h3><span class="bi"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO[k]+'</svg></span>'+esc(t)+'</h3>'}
+function wt(a){var n=a.join(' ').length;return Math.max(70,n)}
 function renderSheet(id,keepScroll){
   var t=find(id),sh=$("#sheet");
   if(!t){return}
@@ -523,10 +532,10 @@ function renderSheet(id,keepScroll){
    '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
    (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
-   '<div class="cols">'+'<section class="blk">'+bh("book","מה לומדים")+list(t.learn)+(t.how&&t.how.length?'<h4 class="sub"><span class="bi sm"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO.spark+'</svg></span>איך לומדים</h4>'+list(t.how):'')+'</section>'+
-   (t.off&&t.off.length?'<section class="blk off">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
-   '<section class="blk">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
-   '<section class="blk gives">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+'</div>'+
+   '<div class="rw">'+'<section class="blk" style="--w:'+wt(t.learn.concat(t.how||[]))+'">'+bh("book","מה לומדים")+list(t.learn)+(t.how&&t.how.length?'<h4 class="sub"><span class="bi sm"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO.spark+'</svg></span>איך לומדים</h4>'+list(t.how):'')+'</section>'+
+   (t.off&&t.off.length?'<section class="blk off" style="--w:'+wt(t.off.map(function(x){return x.replace("||"," ")}))+'">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
+   '</div><div class="rw">'+'<section class="blk" style="--w:'+wt([NO_REQ])+'">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
+   '<section class="blk gives" style="--w:'+wt([t.gives])+'">'+bh("star","מה מקבלים")+'<p>'+esc(t.gives)+'</p></section>'+'</div>'+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
    '</div>';
