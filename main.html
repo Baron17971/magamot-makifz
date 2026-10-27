@@ -525,7 +525,9 @@ function renderSheet(id,keepScroll){
   var c=CATS[t.cat].color;
   var route='<div class="route wide"><h3>לאן זה מוביל</h3>';
   route+='<div class="stop now"><b>בסיום התיכון</b><ul><li>'+esc(OUT[t.id])+'</li></ul></div>';
-  if(t.next.length)route+='<div class="stop"><b>אחרי התיכון</b>'+list(t.next)+'</div>';
+  var AR='שירות צבאי: ',army=t.next.filter(function(x){return x.indexOf(AR)===0}).map(function(x){return x.slice(AR.length)}),nx=t.next.filter(function(x){return x.indexOf(AR)!==0}).map(function(x){return army.length?x.replace(/^המשך אקדמי: /,''):x});
+  if(army.length)route+='<div class="stop"><b>בצבא</b>'+list(army)+'</div>';
+  if(nx.length)route+='<div class="stop"><b>'+(army.length?'אחרי הצבא: המשך אקדמי':'אחרי התיכון')+'</b>'+list(nx)+'</div>';
   if(t.later.length)route+='<div class="stop"><b>בעולם העבודה</b>'+list(t.later)+'</div>';
   if(!t.next.length&&!t.later.length)route+='<div class="stop"><b>אחרי התיכון</b><ul><li>האתר לא מפרט נתיבי המשך. כדאי לשאול את רכז/ת המגמה.</li></ul></div>';
   route+='</div>';
