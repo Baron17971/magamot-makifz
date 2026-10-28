@@ -76,7 +76,7 @@ a{color:inherit}
 .ways .wb{display:flex;flex-wrap:wrap;gap:8px}
 .ways button{flex:1 1 150px;border:1.5px solid #16162B;background:#fff;color:#16162B;border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .ways button:hover{background:#16162B;color:#fff}
-.blk.bag{}
+.blk.bag{background:#16162B;color:#fff;border:0;border-radius:18px;border-top:5px solid var(--c)}.blk.bag h3,.blk.bag p{color:#fff}.blk.bag .bi{background:rgba(255,255,255,.14)}.blk.bag .bi svg{stroke:#fff}.blk.bag p{font-size:17px;font-weight:600}
 @keyframes tpulse{0%,100%{background:transparent}30%{background:#FFF4D1}}
 .terms .pulse{animation:tpulse 1.6s ease}
 .intro{padding:0 0 24px}
@@ -594,11 +594,11 @@ function renderSheet(id,keepScroll){
    '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
    (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
+   (BAG[t.id]?'<section class="blk wide bag">'+bh("star","בדרך לבגרוטק")+'<p>המגמה כוללת 5 יח״ל ב'+BAG[t.id]+', אחת משלוש הדרישות של בגרוטק (בנוסף: 5 יח״ל במתמטיקה ו-5 יח״ל באנגלית).</p></section>':'')+
    '<div class="rw">'+'<section class="blk" style="--w:'+wt(t.learn.concat(t.how||[]))+'">'+bh("book","מה לומדים")+list(t.learn)+(t.how&&t.how.length?'<h4 class="sub"><span class="bi sm"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO.spark+'</svg></span>איך לומדים</h4>'+list(t.how):'')+'</section>'+
    (t.off&&t.off.length?'<section class="blk off" style="--w:'+wt(t.off.map(function(x){return x.replace("||"," ")}))+'">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
    '</div><div class="rw">'+'<section class="blk need" style="--w:'+wt([NO_REQ])+'">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
    (t.g&&t.g.length?'<section class="blk gives" style="--w:'+wt(t.g)+'">'+bh("star","מה מקבלים")+list(t.g)+'</section>':'')+'</div>'+
-   (BAG[t.id]?'<section class="blk wide bag">'+bh("star","בדרך לבגרוטק")+'<p>המגמה כוללת 5 יח״ל ב'+BAG[t.id]+', אחת משלוש הדרישות של בגרוטק (בנוסף: 5 יח״ל במתמטיקה ו-5 יח״ל באנגלית).</p></section>':'')+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
    '</div>';
