@@ -593,8 +593,8 @@ function renderSheet(id,keepScroll){
    '<div class="sh-hero"><div class="sh-pic"><img src="img/'+t.id+'.webp" alt="" width="640" height="360"></div><div class="sh-txt">'+
    '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
-   (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
    (BAG[t.id]?'<section class="blk wide bag">'+bh("star","בדרך לבגרוטק")+'<p>המגמה כוללת 5 יח״ל ב'+BAG[t.id]+', אחת משלוש הדרישות של בגרוטק (בנוסף: 5 יח״ל במתמטיקה ו-5 יח״ל באנגלית).</p></section>':'')+
+   (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
    '<div class="rw">'+'<section class="blk" style="--w:'+wt(t.learn.concat(t.how||[]))+'">'+bh("book","מה לומדים")+list(t.learn)+(t.how&&t.how.length?'<h4 class="sub"><span class="bi sm"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO.spark+'</svg></span>איך לומדים</h4>'+list(t.how):'')+'</section>'+
    (t.off&&t.off.length?'<section class="blk off" style="--w:'+wt(t.off.map(function(x){return x.replace("||"," ")}))+'">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
    '</div><div class="rw">'+'<section class="blk need" style="--w:'+wt([NO_REQ])+'">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
