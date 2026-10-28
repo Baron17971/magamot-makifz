@@ -96,6 +96,8 @@ a{color:inherit}
 .tile:active{transform:scale(.98)}
 .tile .ill{margin:-16px -16px 8px -20px;aspect-ratio:16/9;height:auto;background:color-mix(in srgb,var(--c) 10%,#fff);overflow:hidden}
 .tile .ill img{display:block;width:100%;height:100%;object-fit:cover}
+.tile .stem{position:absolute;top:10px;inset-inline-start:14px;z-index:2;background:#FFB400;color:#16162B;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.chip.stem{border-color:#FFB400;background:#FFF4D1}.chip.stem[aria-pressed="true"]{background:#FFB400;border-color:#FFB400;color:#16162B}
 .tile .open{all:unset;cursor:pointer;display:block}
 .tile .open::after{content:"";position:absolute;inset:0}
 .tile .open:focus-visible{outline:none}
@@ -445,8 +447,9 @@ var STAR='<svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3 2.7 5.
 /* ---------- list ---------- */
 var state={cat:"all",q:"",view:"All"};
 
+function isStem(t){return t.cat==="tech"||t.cat==="sci"}
 function matches(t){
-  if(state.cat!=="all"&&t.cat!==state.cat)return false;
+  if(state.cat==="stem"){if(!isStem(t))return false}else if(state.cat!=="all"&&t.cat!==state.cat)return false;
   var q=state.q.trim().toLowerCase();
   if(!q)return true;
   var hay=(t.name+" "+t.tag+" "+t.about+" "+t.how.join(" ")+" "+t.kw+" "+t.learn.join(" ")+" "+t.next.join(" ")+" "+t.later.join(" ")).toLowerCase();
@@ -455,7 +458,7 @@ function matches(t){
 
 function tile(t){
   var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
-  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">מדעי-טכנולוגי</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
   s.addEventListener("click",function(){toggleFav(t.id)});
@@ -465,9 +468,9 @@ function tile(t){
 
 function renderChips(){
   var box=$("#chips");box.innerHTML="";
-  var items=[["all","הכל"]].concat(Object.keys(CATS).map(function(k){return [k,CATS[k].name]}));
+  var items=[["all","הכל"],["stem","מדעי-טכנולוגי"]].concat(Object.keys(CATS).map(function(k){return [k,CATS[k].name]}));
   items.forEach(function(it){
-    var c=el("button",{"class":"chip","type":"button","aria-pressed":state.cat===it[0]},esc(it[1]));
+    var c=el("button",{"class":"chip"+(it[0]==="stem"?" stem":""),"type":"button","aria-pressed":state.cat===it[0]},esc(it[1]));
     c.addEventListener("click",function(){state.cat=it[0];renderChips();renderGroups()});
     box.appendChild(c);
   });
