@@ -492,9 +492,12 @@ var state={cat:"all",q:"",view:"All"};
 var CLA=["biotech","physics","bio","theatre","geo","art","film","industry"],CLB=["cs","chem","physics","bio","motal","arabic","russian","social"];
 function clusters(id){var r=[];if(CLA.indexOf(id)>-1)r.push("א");if(CLB.indexOf(id)>-1)r.push("ב");return r}
 function clusterTags(id){var c=clusters(id);if(!c.length)return '<span class="cl cl3">מגמה שלישית</span>';return c.map(function(x){return '<span class="cl cl'+x+'">אשכול '+x+'</span>'}).join("")}
+var MOB_CAT={motal:"sci",shoah:"soc"};
+var mobMQ=window.matchMedia?matchMedia("(max-width:1099px)"):{matches:false};
+function gcat(t){return mobMQ.matches&&MOB_CAT[t.id]?MOB_CAT[t.id]:t.cat}
 function isStem(t){return t.cat==="tech"||t.cat==="sci"||t.id==="motal"}
 function matches(t){
-  if(state.cat==="stem"){if(!isStem(t))return false}else if(state.cat!=="all"&&t.cat!==state.cat)return false;
+  if(state.cat==="stem"){if(!isStem(t))return false}else if(state.cat!=="all"&&gcat(t)!==state.cat)return false;
   var q=state.q.trim().toLowerCase();
   if(!q)return true;
   var hay=(t.name+" "+t.tag+" "+t.about+" "+t.how.join(" ")+" "+t.kw+" "+t.learn.join(" ")+" "+t.next.join(" ")+" "+t.later.join(" ")).toLowerCase();
@@ -502,7 +505,7 @@ function matches(t){
 }
 
 function tile(t){
-  var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
+  var b=el("div",{"class":"tile","style":"--c:"+CATS[gcat(t)].color});
   b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">'+(t.cat==="tech"?'מדעי-טכנולוגי':'מדעי')+'</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>'+'<div class="cls">'+clusterTags(t.id)+'</div>';
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
@@ -525,7 +528,7 @@ function renderGroups(){
   var root=$("#groups");root.innerHTML="";
   var any=false;
   Object.keys(CATS).forEach(function(k){
-    var list=TRACKS.filter(function(t){return t.cat===k&&matches(t)});
+    var list=TRACKS.filter(function(t){return gcat(t)===k&&matches(t)});
     if(!list.length)return;any=true;
     var g=el("section",{"class":"group","data-cat":k});
     g.appendChild(el("h2",null,esc(CATS[k].name)+' <span>'+list.length+'</span>'));
@@ -537,6 +540,7 @@ function renderGroups(){
   setTimeout(eqTiles,0);
 }
 
+try{if(mobMQ.addEventListener)mobMQ.addEventListener("change",function(){renderGroups();renderMine()})}catch(e){}
 var eqBusy=false;
 function eqTiles(){
   if(eqBusy)return;eqBusy=true;
