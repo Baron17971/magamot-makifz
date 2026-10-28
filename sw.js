@@ -1,4 +1,4 @@
-const CACHE = "magamot-v37";
+const CACHE = "magamot-v38";
 const SHELL = ["./", "index.html", "app.html", "main.html", "manifest.webmanifest", "cover.webp", "icons/icon-192.png", "icons/icon.svg", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
