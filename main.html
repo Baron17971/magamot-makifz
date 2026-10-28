@@ -93,6 +93,9 @@ a{color:inherit}
 .intro .ic .go{display:inline-block;margin-top:4px;border:1.5px solid #16162B;background:#fff;color:#16162B;border-radius:12px;padding:9px 14px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .intro .ic .go:hover{background:#16162B;color:#fff}
 .intro .all{display:block;width:100%;margin-top:20px;background:#FFB400;color:#16162B;border:0;border-radius:16px;padding:15px;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+.cls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cl{font-size:13px;font-weight:700;color:#fff;padding:3px 11px;border-radius:999px}
+.cl.clא{background:#8C7B6E}.cl.clב{background:#2F85A0}
 /* chips */
 .chips{display:flex;gap:8px;overflow-x:auto;padding:16px 16px 4px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
@@ -483,6 +486,9 @@ var STAR='<svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3 2.7 5.
 /* ---------- list ---------- */
 var state={cat:"all",q:"",view:"All"};
 
+var CLA=["biotech","physics","bio","theatre","geo","art","film","industry"],CLB=["cs","chem","physics","bio","arabic","russian","social"];
+function clusters(id){var r=[];if(CLA.indexOf(id)>-1)r.push("א");if(CLB.indexOf(id)>-1)r.push("ב");return r}
+function clusterTags(id){return clusters(id).map(function(c){return '<span class="cl cl'+c+'">אשכול '+c+'</span>'}).join("")}
 function isStem(t){return t.cat==="tech"||t.cat==="sci"}
 function matches(t){
   if(state.cat==="stem"){if(!isStem(t))return false}else if(state.cat!=="all"&&t.cat!==state.cat)return false;
@@ -494,7 +500,7 @@ function matches(t){
 
 function tile(t){
   var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
-  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">'+(t.cat==="tech"?'מדעי-טכנולוגי':'מדעי')+'</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">'+(t.cat==="tech"?'מדעי-טכנולוגי':'מדעי')+'</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>'+(clusters(t.id).length?'<div class="cls">'+clusterTags(t.id)+'</div>':'');
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
   s.addEventListener("click",function(){toggleFav(t.id)});
@@ -592,7 +598,7 @@ function renderSheet(id,keepScroll){
    '<button class="pill share favbtn mini" aria-pressed="'+isFav(t.id)+'" aria-label="שמירה ברשימה שלי" title="שמירה ברשימה שלי">'+STAR+'</button></div></div>'+
    '<div class="sh-head" style="--img:url(img/'+t.id+'.webp)"><div class="sh-bg"></div><div class="sh-in">'+
    '<div class="sh-hero"><div class="sh-pic"><img src="img/'+t.id+'.webp" alt="" width="640" height="360"></div><div class="sh-txt">'+
-   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
+   '<h2 id="shTitle">'+esc(t.name)+'</h2><p>'+esc(t.tag)+'</p>'+(clusters(t.id).length?'<div class="cls">'+clusterTags(t.id)+'</div>':'')+(t.facts&&t.facts.length?'<div class="facts">'+t.facts.map(function(f){return '<span>'+esc(f)+'</span>'}).join('')+'</div>':'')+'<button class="pill starp big favbtn" id="shFav" aria-pressed="'+isFav(t.id)+'">'+STAR+'<span>'+(isFav(t.id)?'נשמר ברשימה שלי':'שמרו לרשימה שלי')+'</span></button></div></div></div></div>'+
    '<div class="sh-body">'+
    (BAG[t.id]?'<section class="blk wide bag">'+bh("star","בדרך לבגרוטק")+'<p>המגמה כוללת 5 יח״ל ב'+BAG[t.id]+', אחת משלוש הדרישות של בגרוטק (בנוסף: 5 יח״ל במתמטיקה ו-5 יח״ל באנגלית).</p></section>':'')+
    (t.about?'<section class="blk wide lead">'+bh("info","על המגמה")+'<p>'+esc(t.about)+'</p></section>':'')+
