@@ -71,6 +71,14 @@ a{color:inherit}
 .search input:focus{outline:none}
 .search:focus-within{outline:3px solid #FFB400}
 
+.ways{margin:16px 16px 0;background:#FFF4D1;border:1.5px solid #FFB400;border-radius:18px;padding:14px 14px 12px}
+.ways h2{margin:0 0 10px;font-size:18px}
+.ways .wb{display:flex;flex-wrap:wrap;gap:8px}
+.ways button{flex:1 1 150px;border:1.5px solid #16162B;background:#fff;color:#16162B;border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.ways button:hover{background:#16162B;color:#fff}
+.blk.bag{background:#FFF4D1;border:1.5px solid #FFB400}
+@keyframes tpulse{0%,100%{background:transparent}30%{background:#FFF4D1}}
+.terms .pulse{animation:tpulse 1.6s ease}
 /* chips */
 .chips{display:flex;gap:8px;overflow-x:auto;padding:16px 16px 4px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
@@ -313,6 +321,7 @@ a{color:inherit}
       <input id="q" type="search" placeholder="חפשו מגמה או תחום, למשל ״הייטק״" autocomplete="off">
     </label>
   </div>
+  <div class="ways" id="ways"><h2>שלוש דרכים לבגרות איכותית</h2><div class="wb"><button type="button" data-w="sci">מקצועות מדעיים</button><button type="button" data-w="t-excel">תעודת מצטיין מנכ״ל</button><button type="button" data-w="t-bagrotek">בגרוטק</button></div></div>
   <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום"></div>
   <div id="groups"></div>
 </section>
@@ -336,8 +345,8 @@ a{color:inherit}
       <div><dt>יח״ל (יחידות לימוד)</dt><dd>ההיקף של מקצוע בתעודת הבגרות. מקצוע ב-5 יח״ל הוא ברמה המורחבת.</dd></div>
       <div><dt>בונוס</dt><dd>תוספת לממוצע הציונים בקבלה ללימודים אקדמיים, על מקצועות שנלמדו ברמה גבוהה.</dd></div>
       <div><dt>תעודה טכנולוגית</dt><dd>תעודה נוספת, מעבר לתעודת הבגרות, שמקבלים בסיום מסלולים טכנולוגיים.</dd></div>
-      <div><dt>בגרוטק</dt><dd>יוזמה של משרד החינוך לתעודת בגרות טכנולוגית איכותית, כדי להגדיל את מספר המוכשרים להייטק. כוללת 5 יח״ל במתמטיקה, 5 יח״ל באנגלית ו-5 יח״ל בפיזיקה ו/או במדעי המחשב.</dd></div>
-      <div><dt>תעודת מצטיין מנכ״ל</dt><dd>תעודת הוקרה רשמית של משרד החינוך לבוגרים שסיימו בהצטיינות יתרה. התנאים: ממוצע 90 ומעלה בבגרות, אנגלית ב-5 יח״ל, מתמטיקה ב-4 או 5 יח״ל, והצטיינות בתוכנית להתפתחות אישית ולמעורבות חברתית-קהילתית (בגרות חברתית).</dd></div>
+      <div id="t-bagrotek"><dt>בגרוטק</dt><dd>יוזמה של משרד החינוך לתעודת בגרות טכנולוגית איכותית, כדי להגדיל את מספר המוכשרים להייטק. כוללת 5 יח״ל במתמטיקה, 5 יח״ל באנגלית ו-5 יח״ל בפיזיקה ו/או במדעי המחשב.</dd></div>
+      <div id="t-excel"><dt>תעודת מצטיין מנכ״ל</dt><dd>תעודת הוקרה רשמית של משרד החינוך לבוגרים שסיימו בהצטיינות יתרה. התנאים: ממוצע 90 ומעלה בבגרות, אנגלית ב-5 יח״ל, מתמטיקה ב-4 או 5 יח״ל, והצטיינות בתוכנית להתפתחות אישית ולמעורבות חברתית-קהילתית (בגרות חברתית).</dd></div>
       <div><dt>עתודה טכנולוגית</dt><dd>מסלול בצה״ל שמאפשר ללמוד תואר הנדסי במסגרת השירות.</dd></div>
     </dl>
   </div>
@@ -519,6 +528,11 @@ document.querySelectorAll(".nav button").forEach(function(b){
     setView(b.dataset.view);
   });
 });
+document.querySelectorAll("#ways button").forEach(function(b){b.addEventListener("click",function(){
+  var w=b.dataset.w;
+  if(w==="sci"){state.cat="stem";renderChips();renderGroups();var g=$("#groups");if(g)g.scrollIntoView({behavior:"smooth"});return}
+  setView("Help");var e=document.getElementById(w);if(e){e.scrollIntoView({block:"center"});e.classList.remove("pulse");void e.offsetWidth;e.classList.add("pulse")}
+})});
 $("#q").addEventListener("input",function(e){state.q=e.target.value;renderGroups()});
 
 /* ---------- detail sheet ---------- */
@@ -530,6 +544,7 @@ function list(items){return '<ul>'+items.map(function(i){return '<li>'+esc(i)+'<
 var ICO={info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/>',book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5v16"/><path d="M9 8h7"/>',spark:'<path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z"/><path d="M19 16v4M17 18h4"/>',check:'<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4.5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/>',star:'<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/>'};
 function bh(k,t){return '<h3><span class="bi"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO[k]+'</svg></span>'+esc(t)+'</h3>'}
 function wt(a){var n=a.join(' ').length;return Math.max(70,n)}
+var BAG={cs:"מדעי המחשב",physics:"פיזיקה"};
 function renderSheet(id,keepScroll){
   var t=find(id),sh=$("#sheet");
   if(!t){return}
@@ -560,6 +575,7 @@ function renderSheet(id,keepScroll){
    (t.off&&t.off.length?'<section class="blk off" style="--w:'+wt(t.off.map(function(x){return x.replace("||"," ")}))+'">'+bh("check","הבגרות: במה נבחנים ומה לומדים")+'<ul>'+t.off.map(function(i){var p=i.split("||");return '<li><b>'+esc(p[0])+':</b> '+esc(p[1])+'</li>'}).join("")+'</ul>'+'<p class="muted src"><a href="'+t.src+'" target="_blank" rel="noopener">המקור באתר הפיקוח של משרד החינוך</a></p></section>':'')+
    '</div><div class="rw">'+'<section class="blk need" style="--w:'+wt([NO_REQ])+'">'+bh("user","מה נדרש")+'<p>'+esc(NO_REQ)+'</p></section>'+
    (t.g&&t.g.length?'<section class="blk gives" style="--w:'+wt(t.g)+'">'+bh("star","מה מקבלים")+list(t.g)+'</section>':'')+'</div>'+
+   (BAG[t.id]?'<section class="blk wide bag">'+bh("star","בדרך לבגרוטק")+'<p>המגמה כוללת 5 יח״ל ב'+BAG[t.id]+', אחת משלוש הדרישות של בגרוטק (בנוסף: 5 יח״ל במתמטיקה ו-5 יח״ל באנגלית).</p></section>':'')+
    route+
    '<a class="cta" href="'+url(t)+'" target="_blank" rel="noopener">לעמוד המגמה באתר בית הספר</a>'+
    '</div>';
