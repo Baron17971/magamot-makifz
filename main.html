@@ -112,6 +112,7 @@ a{color:inherit}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr)} .wrap{max-width:980px;margin:0 auto}}
 @media(min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:720px){.tile h3{min-height:2.4em}.tile p{min-height:calc(1.45em*4);-webkit-line-clamp:4}.tile .cl,.tile .cls{margin-top:auto}}
 @media(min-width:1100px){.wrap{max-width:1280px}#groups{display:flex;flex-wrap:wrap}#groups>.group{flex:1 1 50%;min-width:0;box-sizing:border-box}#groups>.group[data-cat=art]{flex-basis:100%}#groups>.group:nth-child(odd){padding-inline-end:8px!important}#groups>.group:nth-child(even){padding-inline-start:8px!important}#groups>.group[data-cat=art]{padding-inline:4vw!important}#groups>.group .grid{grid-template-columns:repeat(var(--n,3),1fr)!important}#groups>.group[data-cat=art] .grid{grid-template-columns:repeat(var(--n,4),1fr)!important}}
 .tile{
   position:relative;text-align:start;background:var(--card);border:1px solid var(--line);
@@ -533,8 +534,23 @@ function renderGroups(){
     g.appendChild(grid);g.style.setProperty("--n",list.length);root.appendChild(g);
   });
   if(!any)root.appendChild(el("div",{"class":"empty"},"לא נמצאה מגמה שמתאימה לחיפוש.<br>נסו מילה אחרת או נקו את הסינון."));
+  setTimeout(eqTiles,0);
 }
 
+var eqBusy=false;
+function eqTiles(){
+  if(eqBusy)return;eqBusy=true;
+  var ts=[].slice.call(document.querySelectorAll("#groups .tile"));
+  ts.forEach(function(t){t.style.minHeight=""});
+  if(innerWidth>=720&&ts.length){
+    var m=0;ts.forEach(function(t){m=Math.max(m,t.getBoundingClientRect().height)});
+    if(m>0)ts.forEach(function(t){t.style.minHeight=Math.ceil(m)+"px"});
+  }
+  eqBusy=false;
+}
+try{if(window.ResizeObserver){var eqW=0;new ResizeObserver(function(){if(innerWidth!==eqW||!eqW){eqW=innerWidth;eqTiles()}}).observe(document.getElementById("groups"))}}catch(e){}
+addEventListener("resize",function(){setTimeout(eqTiles,50)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(eqTiles);
 function renderMine(){
   var grid=$("#mineGrid");grid.innerHTML="";
   var list=TRACKS.filter(function(t){return isFav(t.id)});
