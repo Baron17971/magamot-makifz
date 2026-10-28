@@ -458,7 +458,7 @@ function matches(t){
 
 function tile(t){
   var b=el("div",{"class":"tile","style":"--c:"+CATS[t.cat].color});
-  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">מדעי-טכנולוגי</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
+  b.innerHTML='<div class="ill"><img src="img/'+t.id+'.webp" alt="" width="640" height="360" loading="lazy" decoding="async"></div>'+(isStem(t)?'<span class="stem">'+(t.cat==="tech"?'מדעי-טכנולוגי':'מדעי')+'</span>':'')+'<h3><button type="button" class="open">'+esc(t.name)+'</button></h3><p>'+esc(t.tag)+'</p>';
   $(".open",b).addEventListener("click",function(){openTrack(t.id)});
   var s=el("button",{"class":"star","type":"button","aria-pressed":isFav(t.id),"aria-label":"שמירת "+t.name+" ברשימה שלי"},STAR);
   s.addEventListener("click",function(){toggleFav(t.id)});
@@ -468,7 +468,7 @@ function tile(t){
 
 function renderChips(){
   var box=$("#chips");box.innerHTML="";
-  var items=[["all","הכל"],["stem","מדעי-טכנולוגי"]].concat(Object.keys(CATS).map(function(k){return [k,CATS[k].name]}));
+  var items=[["all","הכל"],["stem","מקצועות מדעיים"]].concat(Object.keys(CATS).map(function(k){return [k,CATS[k].name]}));
   items.forEach(function(it){
     var c=el("button",{"class":"chip"+(it[0]==="stem"?" stem":""),"type":"button","aria-pressed":state.cat===it[0]},esc(it[1]));
     c.addEventListener("click",function(){state.cat=it[0];renderChips();renderGroups()});
